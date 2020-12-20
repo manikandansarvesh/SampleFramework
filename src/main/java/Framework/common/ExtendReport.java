@@ -10,7 +10,8 @@ import com.relevantcodes.extentreports.ExtentReports;
  *
  */
 public class ExtendReport {
-	
+
+	ExtentHtmlReporter htmlReporter;
 	static ExtentReports reporter = null;
 	public static String reportfilePath = null;
 	
@@ -35,7 +36,9 @@ public class ExtendReport {
 		}
 		return null;
 	}
-	
+
+
+
 	/**
 	 * Closed the given reporter instance
 	 */
