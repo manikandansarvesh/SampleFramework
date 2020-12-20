@@ -1,4 +1,4 @@
-package pages;
+package Framework.pages;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -15,9 +15,9 @@ import java.util.Iterator;
 public class ExcelDataReader {
     static Logger log = Logger.getLogger(ExcelDataReader.class.getName());
 
-public ExcelDataReader() {
+    public ExcelDataReader() {
 
-}
+    }
     /*
      * Method Name: getWorkSheet()
      *
@@ -30,32 +30,25 @@ public ExcelDataReader() {
      *
      */
 
-    public Sheet getWorkSheet(String FileName, String SheetName) throws IOException
-    {
+    public Sheet getWorkSheet(String FileName, String SheetName) throws IOException {
 
         Sheet SheetObject = null;
         Workbook workbook = null;
-        try
-        {
+        try {
             FileInputStream fis = new FileInputStream(FileName);
 
             //Create Workbook instance for xlsx/xls/xlsm file input stream
 
-            if((FileName.toLowerCase().endsWith("xlsx"))||((FileName.toLowerCase().endsWith("xlsm"))))
-            {
+            if ((FileName.toLowerCase().endsWith("xlsx")) || ((FileName.toLowerCase().endsWith("xlsm")))) {
                 workbook = new XSSFWorkbook(fis);
-            }
-            else if(FileName.toLowerCase().endsWith("xls"))
-            {
+            } else if (FileName.toLowerCase().endsWith("xls")) {
                 workbook = new HSSFWorkbook(fis);
             }
 
 
             SheetObject = (Sheet) workbook.getSheet(SheetName);
 
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
 
             e.printStackTrace();
         }
@@ -79,45 +72,38 @@ public ExcelDataReader() {
      * Description		: This method takes XL file name, Sheet name and header as input and returns index of the Header file.
      *
      */
+    public int readHeaderIndex(String fileName, String sheetName, String Header) {
+        String Parameters = "FileName : " + fileName + ", SheetName : " + sheetName + ", Header : " + Header + "\n";
 
-    public int readHeaderIndex(String fileName,String sheetName, String Header)
-    {
-        String Parameters = "FileName : "+fileName+", SheetName : "+sheetName+", Header : "+Header+"\n";
+        log.info("Inside Method readHeaderIndex() \n Parameters : " + Parameters);
 
-        log.info("Inside Method readHeaderIndex() \n Parameters : "+Parameters);
-
-        int ColumnIndex	=	0;
+        int ColumnIndex = 0;
         boolean found = false;
 
-        try
-        {
+        try {
 
-            Sheet sheet = getWorkSheet(fileName,sheetName);
+            Sheet sheet = getWorkSheet(fileName, sheetName);
 
-            if(sheet != null)
-            {
-                Row HeaderRow=sheet.getRow(0);
+            if (sheet != null) {
+                Row HeaderRow = sheet.getRow(0);
 
                 Iterator<Cell> HeaderCellIterator = HeaderRow.cellIterator();
 
-                while(HeaderCellIterator.hasNext())
-                {
+                while (HeaderCellIterator.hasNext()) {
                     Cell celltoFind = HeaderCellIterator.next();
-                    if(celltoFind.toString().equals(Header))
-                    {
-                        ColumnIndex		= 	celltoFind.getColumnIndex();
+                    if (celltoFind.toString().equals(Header)) {
+                        ColumnIndex = celltoFind.getColumnIndex();
                         found = true;
                     }
                 }
             }
-        }catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             log.error("Exception Occurred!!!!", e);
         }
 
 
-        return ColumnIndex+1;
+        return ColumnIndex + 1;
 
     }
 
@@ -138,49 +124,42 @@ public ExcelDataReader() {
      * Description		: This method takes XL file name, Sheet name, Row index and Column index and returns the Cell Value.
      *
      */
-
-
     @SuppressWarnings("deprecation")
-    public String readXLatIndex(String fileName,String sheetName, String cellContent, int ColumnIndex)
-    {
-        int RowIndex=0;
+    public String readXLatIndex(String fileName, String sheetName, String cellContent, int ColumnIndex) {
+        int RowIndex = 0;
         //RowIndex-= 1;
-        ColumnIndex-=1;
+        ColumnIndex -= 1;
 
-        String ColumnStringValue	= "";
+        String ColumnStringValue = "";
 
 
-        try
-        {
+        try {
 
-            Sheet sheet = getWorkSheet(fileName,sheetName);
+            Sheet sheet = getWorkSheet(fileName, sheetName);
             for (Row row : sheet) {
                 for (Cell cell : row) {
                     if (cell.getCellType() == CellType.STRING) {
                         if (cell.getRichStringCellValue().getString().trim().equals(cellContent)) {
-                            RowIndex= row.getRowNum();
+                            RowIndex = row.getRowNum();
 
                         }
                     }
                 }
             }
 
-            if(sheet!=null)
-            {
-                Row DataRow=sheet.getRow(RowIndex);
+            if (sheet != null) {
+                Row DataRow = sheet.getRow(RowIndex);
 
                 Cell celltoFind = DataRow.getCell(ColumnIndex);
 
-                if(celltoFind != null)
-                {
+                if (celltoFind != null) {
 
-                    switch( celltoFind.getCellType())
-                    {
+                    switch (celltoFind.getCellType()) {
                         case BLANK:
                             ColumnStringValue = "";
 
                         case NUMERIC:
-                            long i = (long)celltoFind.getNumericCellValue();//Getting Numeric value from the sheet and Type casting to 'long' type to hold more than 12 digits
+                            long i = (long) celltoFind.getNumericCellValue();//Getting Numeric value from the sheet and Type casting to 'long' type to hold more than 12 digits
                             ColumnStringValue = String.valueOf(i);
                             break;
 
@@ -207,16 +186,14 @@ public ExcelDataReader() {
 
                         default:
                             System.out.println("Default");
-                            ColumnStringValue	=	"";
+                            ColumnStringValue = "";
 
                     }
                 }
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-            log.error("Exception Occurred",e);
+            log.error("Exception Occurred", e);
         }
         return ColumnStringValue;
 
@@ -238,40 +215,34 @@ public ExcelDataReader() {
      * Description		: This method returns the XL Row in an array of string.
      *
      */
+    public String[] readXLRow(String fileName, String SheetName, int RowtoRead) {
+        String Parameters = "FileName : " + fileName + ", SheetName : " + SheetName + ", Row to Read : " + RowtoRead + "\n";
+        log.info("Inside Method readXLRow() \n Parameters : " + Parameters);
 
-    public String[] readXLRow(String fileName,String SheetName,int RowtoRead)
-    {
-        String Parameters = "FileName : "+fileName+", SheetName : "+SheetName+", Row to Read : "+RowtoRead+"\n";
-        log.info("Inside Method readXLRow() \n Parameters : "+Parameters);
-
-        RowtoRead = RowtoRead-1;
+        RowtoRead = RowtoRead - 1;
         String[] cellsinRow = null;
 
-        try
-        {
-            Sheet sheet = getWorkSheet(fileName,SheetName);
+        try {
+            Sheet sheet = getWorkSheet(fileName, SheetName);
 
-            if(sheet!=null)
-            {
-                int i=0;
+            if (sheet != null) {
+                int i = 0;
 
                 int cellCount = readNumberofCellsinXL(fileName, SheetName);
 
 
-                cellsinRow	=	new String[cellCount];
+                cellsinRow = new String[cellCount];
 
-                Row DataRow=sheet.getRow(RowtoRead);
+                Row DataRow = sheet.getRow(RowtoRead);
 
 
                 Iterator<Cell> HeaderCellIterator1 = DataRow.cellIterator();
 
-                while(HeaderCellIterator1.hasNext())
-                {
+                while (HeaderCellIterator1.hasNext()) {
                     Cell CurrentRowCells1 = HeaderCellIterator1.next();
 
 
-                    switch( CurrentRowCells1.getCellType())
-                    {
+                    switch (CurrentRowCells1.getCellType()) {
 
                         case NUMERIC:
 
@@ -304,18 +275,16 @@ public ExcelDataReader() {
 
                         default:
                             System.out.println("Defaul");
-                            cellsinRow[i]	=	"";
+                            cellsinRow[i] = "";
                     }
 
                     i++;
                 }
             }
 
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-            log.error("Exception Occurred",e);
+            log.error("Exception Occurred", e);
         }
 
         return cellsinRow;
@@ -335,27 +304,22 @@ public ExcelDataReader() {
      */
 
 
-    public int readNumberofRowsinXL(String fileName,String SheetName)
-    {
-        String Parameters = "FileName : "+fileName+", SheetName : "+SheetName+"\n";
-        log.info("Inside Method readNumberofRowsinXL() \n Parameters : "+Parameters);
+    public int readNumberofRowsinXL(String fileName, String SheetName) {
+        String Parameters = "FileName : " + fileName + ", SheetName : " + SheetName + "\n";
+        log.info("Inside Method readNumberofRowsinXL() \n Parameters : " + Parameters);
 
         int NumberofRows = 0;
 
 
-        try
-        {
-            Sheet sheet = getWorkSheet(fileName,SheetName);
-            if(sheet!=null)
-            {
-                NumberofRows = sheet.getLastRowNum()+1;
+        try {
+            Sheet sheet = getWorkSheet(fileName, SheetName);
+            if (sheet != null) {
+                NumberofRows = sheet.getLastRowNum() + 1;
             }
 
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-            log.error("Exception Occurred",e);
+            log.error("Exception Occurred", e);
         }
 
         return NumberofRows;
@@ -375,34 +339,27 @@ public ExcelDataReader() {
      * Description		: This method returns the number of cells in XL.
      *
      */
-
-    public int readNumberofCellsinXL(String fileName,String SheetName)
-    {
-        String Parameters = "FileName : "+fileName+", SheetName : "+SheetName+"\n";
-        log.info("Inside Method readNumberofCellsinXL() \n Parameters : "+Parameters);
+    public int readNumberofCellsinXL(String fileName, String SheetName) {
+        String Parameters = "FileName : " + fileName + ", SheetName : " + SheetName + "\n";
+        log.info("Inside Method readNumberofCellsinXL() \n Parameters : " + Parameters);
 
         int cellCount = 0;
 
-        try
-        {
-            Sheet sheet = getWorkSheet(fileName,SheetName);
-            if(sheet!=null)
-            {
-                Row DummyRow=sheet.getRow(0);
+        try {
+            Sheet sheet = getWorkSheet(fileName, SheetName);
+            if (sheet != null) {
+                Row DummyRow = sheet.getRow(0);
 
                 Iterator<Cell> HeaderCellIterator = DummyRow.cellIterator();
 
-                while(HeaderCellIterator.hasNext())
-                {
+                while (HeaderCellIterator.hasNext()) {
                     Cell CurrentRowCells = HeaderCellIterator.next();
                     cellCount++;
                 }
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-            log.error("Exception Occurred",e);
+            log.error("Exception Occurred", e);
         }
 
 

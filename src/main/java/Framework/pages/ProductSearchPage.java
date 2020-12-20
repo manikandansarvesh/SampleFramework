@@ -1,9 +1,10 @@
-package pages;
+package Framework.pages;
 
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import org.testng.Assert;
 
 public class ProductSearchPage extends BasePage<ProductSearchPage> {
 	ExcelDataReader excelreader=new ExcelDataReader();
@@ -50,20 +51,25 @@ public class ProductSearchPage extends BasePage<ProductSearchPage> {
 	 * @tag  @throws Exception
 	 */
 	public ProductSearchPage searchProduct() throws Exception {
+		clickAfterFindingElement(SEARCH_PRODUCT_FIELD);
+		setvalues(SEARCH_PRODUCT_FIELD,getTestData("ProductName","TC01"));
 		
 		return this;
 	}
 
 	
 	/**
-	 * @author 
+	 * @author
 	 *
 	 *	Select the product
 	 * @return ProductSearchPage
 	 * @tag  @return
 	 */
 	public ProductSearchPage selectProduct() {
-		
+		clickAfterFindingElement(SELECT_PRODUCT);
+		scrollDown(3);
+
+
 		return this;
 	}
 	
@@ -77,7 +83,9 @@ public class ProductSearchPage extends BasePage<ProductSearchPage> {
 	 * @tag  @throws Exception
 	 */
 	public ProductSearchPage selectSearchedProduct() throws Exception {
-		
+		waitForElementToBeDisplayed(PRODUCT_NAME);
+		clickAfterFindingElement(PRODUCT_NAME);
+
 		return this;
 	}
 	
@@ -91,6 +99,15 @@ public class ProductSearchPage extends BasePage<ProductSearchPage> {
 	 * @tag  @throws Exception
 	 */
 	public ProductSearchPage validateProductScreenValuesVsCheckout()throws Exception {
+		scrollDown(1);
+		String productName=getTextAfterFindingElement(PRODUCT_NAME);
+		String productPrice=getTextAfterFindingElement(PRODUCT_PRICE);
+		clickAfterFindingElement(ADD_TO_CART_BTN);
+		clickAfterFindingElement(PROCEED_TO_CHECKOUT);
+		getDriver().hideKeyboard();
+		clickAfterFindingElement(ADD_TO_CART_BTN);
+		Assert.assertEquals(getTextAfterFindingElement(PRODUCT_NAME),getTextAfterFindingElement(CHECKOUT_PRODUCT_NAME));
+		Assert.assertEquals(getTextAfterFindingElement(PRODUCT_PRICE),getTextAfterFindingElement(CHECKOUT_PRODUCT_PRICE));
 		
 		return this;
 	}

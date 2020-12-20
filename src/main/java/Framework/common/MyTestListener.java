@@ -1,4 +1,4 @@
-package common;
+package Framework.common;
 
 import org.testng.ITestContext;
 import org.testng.ITestListener;

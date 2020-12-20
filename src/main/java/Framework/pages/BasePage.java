@@ -1,6 +1,8 @@
-package pages;
+package Framework.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.support.PageFactory;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -47,7 +49,7 @@ public class BasePage<T extends BasePage<T>> {
 	 * @tag  @param mobileElement
 	 */
 	public void clickAfterFindingElement(MobileElement mobileElement) {
-		mobileElement.click();
+		fastClick(mobileElement,10);
 		
 	}
 	
@@ -55,7 +57,8 @@ public class BasePage<T extends BasePage<T>> {
 	//Getting the text from a mobile element
 	public String getTextAfterFindingElement(MobileElement mobileElement) {
 		try{
-			text=mobileElement.getText();
+
+			text=getElementText(mobileElement,10);
 		}catch (Exception e){
 			Assert.fail("Unable to get text for the specified object:"+e.getMessage());
 		}
@@ -74,10 +77,13 @@ public class BasePage<T extends BasePage<T>> {
 	 * @tag  @throws Exception
 	 */
 	public void waitForElementToBeDisplayed(MobileElement mobileElement) throws Exception {
-
-		
-		
+		try {
+			mobileElement.isDisplayed();
+		} catch (java.util.NoSuchElementException e) {
+			Assert.fail("Unable to find element: " + e.getMessage());
+		}
 	}
+
 	
 	private String getElementText(MobileElement mobileElement,int timeOutInSeconds) {
 		getDriver().manage().timeouts().implicitlyWait(timeOutInSeconds, TimeUnit.SECONDS);
@@ -96,7 +102,7 @@ public class BasePage<T extends BasePage<T>> {
 	
 	// Clicking on a particular element
 	private void fastClick(MobileElement mobileElement,int timeOutInSeconds) {
-		Wait wait=new WebDriverWait(driver,timeOutInSeconds);
+		Wait wait=new WebDriverWait(getDriver(),timeOutInSeconds);
 		wait.until(ExpectedConditions.elementToBeClickable(mobileElement));
 		mobileElement.click();
 
@@ -113,7 +119,7 @@ public class BasePage<T extends BasePage<T>> {
 	 */
 	public void scrollDown(int times) {
 		for(int i=0;i< times;i++) {
-			org.openqa.selenium.Dimension dim= getDriver().manage().window().getSize();
+			Dimension dim= getDriver().manage().window().getSize();
 			int height=dim.getHeight();
 			int width=dim.getWidth();
 			int x=width/2;
@@ -136,13 +142,26 @@ public class BasePage<T extends BasePage<T>> {
 	 */
 	
 	public T rotateToLandscape() {
-		
+
+		getDriver().rotate(ScreenOrientation.LANDSCAPE);
 		return (T)this;
 	}
 	
 	
 	public T rotateToPortrait() {
-		
+
+		getDriver().rotate(ScreenOrientation.PORTRAIT);
+
 		return (T)this;
+	}
+
+
+	public String getTestData(String columnName,String testcaseID){
+		String testdata;
+		ExcelDataReader excelDataReader=new ExcelDataReader();
+		int columnIndex= excelDataReader.readHeaderIndex(System.getProperty("user.dir")+"/TestData/TestData.xlsx","TestData",columnName);
+		testdata=excelDataReader.readXLatIndex(System.getProperty("user.dir")+"/TestData/TestData.xlsx","TestData",testcaseID,columnIndex);
+		return testdata;
+
 	}
 }

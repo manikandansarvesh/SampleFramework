@@ -1,4 +1,4 @@
-package base;
+package Framework.base;
 
 
 import java.io.FileNotFoundException;
@@ -83,12 +83,13 @@ public void afterMethod(ITestResult result) throws FileNotFoundException {
 	
 	
 	/**
-	 * @author 
+	 * @Manikandan
 	 * @return void
 	 * @tag  
 	 */
 	@AfterClass
 	public void tearDown() {
+		driver.quit();
 		
 	}
 	

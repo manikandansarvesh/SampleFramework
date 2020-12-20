@@ -1,4 +1,4 @@
-package common;
+package Framework.common;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,13 +28,13 @@ public class PropertyExecutor {
 			InputStream input =new FileInputStream(file) ;
 					//PropertyExecutor.class.getClassLoader().getResourceAsStream("");
 			if(input==null){
-				common.LoggerAgent.LogInfo("[ERROR] Sorry, unable to find property file");
+				LoggerAgent.LogInfo("[ERROR] Sorry, unable to find property file");
 		  	}
 			prop.load(input);
 			return prop.getProperty(arg);
 		}
 		catch(Exception e){
-			common.LoggerAgent.LogError("{EXCEPTION} occured while reading property value of " + arg);
+			LoggerAgent.LogError("{EXCEPTION} occured while reading property value of " + arg);
 			e.printStackTrace();
 			return e.getMessage();
 		}

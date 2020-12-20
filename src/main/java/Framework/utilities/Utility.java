@@ -1,4 +1,4 @@
-package utilities;
+package Framework.utilities;
 
 import org.testng.Assert;
 
@@ -38,8 +38,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-
-import common.LoggerAgent;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;

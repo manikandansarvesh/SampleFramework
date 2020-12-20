@@ -1,14 +1,12 @@
-/**
- * 
- */
-package common;
+
+package Framework.common;
 
 import com.relevantcodes.extentreports.DisplayOrder;
 import com.relevantcodes.extentreports.ExtentReports;
 
 /**
  * This class contains static methods to create Extent reports and publish them
- * @author 
+ * @Manikandan
  *
  */
 public class ExtendReport {
@@ -29,7 +27,7 @@ public class ExtendReport {
 			if (reporter == null) {
 				reporter = new ExtentReports(reportfilePath, true, DisplayOrder.OLDEST_FIRST);
 			}
-			common.LoggerAgent.LogInfo("The Report Path is: " +reportfilePath);
+			LoggerAgent.LogInfo("The Report Path is: " +reportfilePath);
 			return reporter;
 		}catch(Exception e){
 			LoggerAgent.LogInfo("[EXCEPTION] Exception encountered while reading property file - Method{getReporter} Class{ReportFactory}!!");

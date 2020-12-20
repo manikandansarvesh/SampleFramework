@@ -1,15 +1,18 @@
 package tests;
 
 
+import Framework.base.BaseTest;
+import Framework.pages.LoginPage;
+import Framework.*;
+import Framework.utilities.Utility;
 import org.testng.annotations.Test;
 
-import utilities.Utility;
+
 import com.relevantcodes.extentreports.LogStatus;
 
-import base.BaseTest;
-import main.java.pages.LoginPage;
 
-public class AmazonShoppingTest extends BaseTest{
+
+public class AmazonShoppingTest extends BaseTest {
 	
 	/*Test for login, 
 	 * adding product and 

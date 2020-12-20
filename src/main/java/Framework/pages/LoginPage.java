@@ -1,13 +1,13 @@
-package main.java.pages;
+package Framework.pages;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 
 
-public class LoginPage extends pages.BasePage<LoginPage> {
+public class LoginPage extends BasePage<LoginPage> {
 	
-	pages.ExcelDataReader excelreader=new pages.ExcelDataReader();
+	ExcelDataReader excelreader=new ExcelDataReader();
 	@AndroidFindBy(id="sign_in_button")
 	private MobileElement ALLOW_SIGNIN;
 	
@@ -53,19 +53,12 @@ public class LoginPage extends pages.BasePage<LoginPage> {
 	 * @tag  @throws Exception
 	 */
 	public LoginPage setEmailAddress() throws Exception {
-		setPassword(EMAIL_ADDRESS,)
+		setvalues(EMAIL_ADDRESS,getTestData("Username","TC01"));
 
 		
 		return this;
 	}
 
-	public String getTestData(String columnName){
-		String testdata;
-		 int columnIndex= excelreader.readHeaderIndex(System.getProperty("user.dir")+"/TestData/TestData.xlsx");
-
-
-
-	}
 	
 	/**
 	 * @author 
@@ -75,7 +68,7 @@ public class LoginPage extends pages.BasePage<LoginPage> {
 	 * @tag  @return
 	 */
 	public LoginPage selectContinue() {
-		
+		clickAfterFindingElement(CONTINUE_BTN);
 		return this;
 	}
 	
@@ -88,6 +81,7 @@ public class LoginPage extends pages.BasePage<LoginPage> {
 	 * @tag  @throws Exception
 	 */
 	public LoginPage setPassword() throws Exception {
+		setvalues(PASSWORD_FIELD,getTestData("Password","TC01"));
 		
 		return this;
 	}
