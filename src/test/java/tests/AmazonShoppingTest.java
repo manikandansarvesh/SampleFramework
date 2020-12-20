@@ -2,22 +2,27 @@ package tests;
 
 
 import Framework.base.BaseTest;
+import Framework.common.ExtendReport;
+import Framework.common.LoggerAgent;
 import Framework.pages.LoginPage;
-import Framework.*;
 import Framework.utilities.Utility;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.ExtentReports;
 import org.testng.annotations.Test;
 
 
 import com.relevantcodes.extentreports.LogStatus;
 
+import static sun.util.logging.LoggingSupport.log;
 
 
 public class AmazonShoppingTest extends BaseTest {
+	public static ExtentTest test;
 	
 	/*Test for login, 
 	 * adding product and 
 	 * validation
-	 * @author 
+	 * @Manikandan
 	*/
 	@Test(priority=1,enabled=true)
 	public void validateAmazonProductAdded() throws Exception {
@@ -32,7 +37,7 @@ public class AmazonShoppingTest extends BaseTest {
 		.selectSearchedProduct()
 		.validateProductScreenValuesVsCheckout()
 		.rotateToPortrait();
-		testReporter.log(LogStatus.PASS, "Product Shipped Successfully...",  testReporter.addScreenCapture(Utility.captureScreenshot(driver, screenShotPath)));
+		test.log(LogStatus.PASS, "Product Shipped Successfully...", test.addScreenCapture(Utility.captureScreenshot(driver, getProperty("ScreenShot_Path"))));
 
 	}
 

@@ -7,7 +7,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-import common.PropertyExecutor;
+import Framework.common.MyTestListener;
+import Framework.common.PropertyExecutor;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
@@ -22,7 +23,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 
-@Listeners(common.MyTestListener.class)
+@Listeners(MyTestListener.class)
 public class BaseTest extends PropertyExecutor{
 	DesiredCapabilities androidDC=new DesiredCapabilities();
 	public AppiumDriver<MobileElement> driver;
@@ -89,6 +90,7 @@ public void afterMethod(ITestResult result) throws FileNotFoundException {
 	 */
 	@AfterClass
 	public void tearDown() {
+		driver.close();
 		driver.quit();
 		
 	}
