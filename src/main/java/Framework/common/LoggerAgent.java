@@ -10,7 +10,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.xml.DOMConfigurator;
 
 /**
-* @author 
+* @Manikandan
 *
 */
 public class LoggerAgent {

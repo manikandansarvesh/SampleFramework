@@ -21,7 +21,6 @@ public class PropertyExecutor {
 	@SuppressWarnings("unused")
 	public static String getProperty(String arg){
 		try{
-			//LoggerAgent.LogInfo("Reading property value from config propertes file of " + arg);
 			
 			Properties prop = new Properties();
 			File file=new File(System.getProperty("user.dir")+"/src/main/resources/TestSetup.properties");

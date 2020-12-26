@@ -43,7 +43,7 @@ public class ProductSearchPage extends BasePage<ProductSearchPage> {
 	
 	
 	/**
-	 * @author 
+	 * @Manikandan 
 	 *
 	 *	Search the product
 	 * @return ProductSearchPage
@@ -59,7 +59,7 @@ public class ProductSearchPage extends BasePage<ProductSearchPage> {
 
 	
 	/**
-	 * @author
+	 * @Manikandan
 	 *
 	 *	Select the product
 	 * @return ProductSearchPage
@@ -75,7 +75,7 @@ public class ProductSearchPage extends BasePage<ProductSearchPage> {
 	
 	
 	/**
-	 * @author 
+	 * @Manikandan 
 	 *
 	 *
 	 * @return ProductSearchPage
@@ -91,7 +91,7 @@ public class ProductSearchPage extends BasePage<ProductSearchPage> {
 	
 	
 	/**
-	 * @author 
+	 * @Manikandan 
 	 *
 	 *	Validate the product value vs Check out product
 	 * @return ProductSearchPage

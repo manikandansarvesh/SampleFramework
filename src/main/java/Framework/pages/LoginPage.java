@@ -31,7 +31,7 @@ public class LoginPage extends BasePage<LoginPage> {
 	
 	
 	/**
-	 * @author 
+	 * @Manikandan 
 	 *
 	 *  login 
 	 * @return LoginPage
@@ -45,7 +45,7 @@ public class LoginPage extends BasePage<LoginPage> {
 
 	
 	/**
-	 * @author 
+	 * @Manikandan 
 	 *
 	 *	Set Email Address
 	 * @return LoginPage
@@ -61,7 +61,7 @@ public class LoginPage extends BasePage<LoginPage> {
 
 	
 	/**
-	 * @author 
+	 * @Manikandan 
 	 *
 	 *	Click on Continue button
 	 * @return LoginPage
@@ -73,7 +73,7 @@ public class LoginPage extends BasePage<LoginPage> {
 	}
 	
 	/**
-	 * @author 
+	 * @Manikandan 
 	 *
 	 *	Enter the password
 	 * @return LoginPage
@@ -88,7 +88,7 @@ public class LoginPage extends BasePage<LoginPage> {
 	
 	
 	/**
-	 * @author 
+	 * @Manikandan 
 	 *
 	 * Click on Sign in button
 	 * @return ProductSearchPage
